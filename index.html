@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Refuerzo Precálculo — Diagnóstico personalizado</title>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  .gradient-header { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%); }
+  .card { transition: all .25s ease; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  .solution-toggle { transition: all .2s ease; }
+  .solution-toggle:hover { transform: scale(1.02); }
+  details[open] .toggle-arrow { transform: rotate(90deg); }
+  .toggle-arrow { transition: transform .2s ease; display: inline-block; }
+  .step { border-left: 3px solid #6366f1; padding-left: 12px; margin: 8px 0; }
+  .warning { border-left: 3px solid #ef4444; background: #fef2f2; padding: 8px 12px; border-radius: 4px; }
+  .tip { border-left: 3px solid #10b981; background: #ecfdf5; padding: 8px 12px; border-radius: 4px; }
+  .tab-active { background: #6366f1; color: white; }
+  .canvas-bg { background: repeating-linear-gradient(0deg, transparent, transparent 19px, #e5e7eb 19px, #e5e7eb 20px),
+                          repeating-linear-gradient(90deg, transparent, transparent 19px, #e5e7eb 19px, #e5e7eb 20px); }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<!-- ENCABEZADO -->
+<header class="gradient-header text-white">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <p class="uppercase tracking-widest text-sm opacity-80">Precálculo 202610 · Plan de refuerzo personalizado</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-2">Daria Isabella — vamos a recuperar 💪</h1>
+    <p class="mt-4 text-lg opacity-90 max-w-3xl">
+      Análisis del Parcial 3 (Tema 1B) y entrenamiento dirigido a tus puntos débiles.
+      No estás "mala en matemáticas": estás cometiendo un patrón muy específico de errores que se puede corregir.
+      Aquí está el diagnóstico sincero, y abajo, 20 ejercicios tipo parcial con solución paso a paso.
+    </p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <a href="#diagnostico" class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-semibold hover:bg-indigo-50">Ver diagnóstico</a>
+      <a href="#ejercicios" class="bg-indigo-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-indigo-900">Ir a los 20 ejercicios</a>
+      <a href="#simuladores" class="bg-pink-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-pink-700">Simuladores</a>
+    </div>
+  </div>
+</header>
+
+<!-- DIAGNÓSTICO -->
+<section id="diagnostico" class="max-w-6xl mx-auto px-6 py-12">
+  <h2 class="text-3xl font-bold text-slate-900">🔍 Diagnóstico honesto</h2>
+  <p class="text-slate-600 mt-2">Esto no es para hacerte sentir mal, es para que sepas <strong>exactamente</strong> dónde poner tu energía.</p>
+
+  <div class="grid md:grid-cols-2 gap-4 mt-6">
+    <div class="card bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+      <h3 class="font-bold text-lg text-slate-900">📊 Lo que dicen los puntos</h3>
+      <p class="text-slate-600 mt-2 text-sm">En el Parcial 3 (Tema 1B) sacaste aproximadamente <strong>1.2 / 5.0</strong>. Pero al revisar
+      tus hojas, <em>no es que no sepas nada</em>: el procedimiento general lo identificas. El problema está
+      en <strong>3 o 4 reglas básicas</strong> que se te están aplicando mal de manera repetida. Si arreglas eso, tu nota cambia dramáticamente.</p>
+    </div>
+    <div class="card bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+      <h3 class="font-bold text-lg text-slate-900">🧠 Lectura conductual</h3>
+      <p class="text-slate-600 mt-2 text-sm">Patrón observado en la hoja: <strong>vas rápido</strong>, te confías de "reglas memorizadas" y no
+      pausas a verificar señales (signo, dominio, base del log). No es falta de esfuerzo — es <em>velocidad sin verificación</em>.
+      La técnica que más te va a ayudar: <strong>detenerte 10 segundos por paso</strong> y preguntarte "¿esta regla aplica acá?".</p>
+    </div>
+  </div>
+
+  <h3 class="text-xl font-bold text-slate-900 mt-10">Errores ordenados por frecuencia</h3>
+  <p class="text-slate-600 mt-1 text-sm">De mayor a menor. Mientras más arriba, más ejercicios vas a encontrar abajo.</p>
+
+  <div class="mt-4 space-y-3">
+
+    <div class="card bg-white rounded-xl border border-red-200 p-5">
+      <div class="flex justify-between items-start gap-4">
+        <div>
+          <span class="pill bg-red-100 text-red-700">CRÍTICO · 5 ejercicios</span>
+          <h4 class="font-bold text-lg mt-2">1) Exponentes fraccionarios y signos en potencias</h4>
+          <p class="text-slate-600 text-sm mt-1">
+            En el punto 8 escribiste $2^{3/2} = 32$. Es <strong>falso</strong>: $2^{3/2} = 2 \cdot \sqrt{2} \approx 2{,}83$.
+            En el punto 6 evaluaste $-3^0 + 2 = 1 + 2 = 3$. Es <strong>falso</strong>: $-3^0 = -1$ (porque $3^0 = 1$ y el menos NO está dentro del exponente). El resultado correcto es $1$.
+          </p>
+          <p class="text-slate-600 text-sm mt-2"><strong>Causa raíz:</strong> confusión entre $a^{m/n} = \sqrt[n]{a^m}$ y la multiplicación. Confusión entre $-a^n$ y $(-a)^n$.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-white rounded-xl border border-red-200 p-5">
+      <div class="flex justify-between items-start gap-4">
+        <div>
+          <span class="pill bg-red-100 text-red-700">CRÍTICO · 4 ejercicios</span>
+          <h4 class="font-bold text-lg mt-2">2) Propiedades de logaritmos</h4>
+          <p class="text-slate-600 text-sm mt-1">
+            En el punto 7 hiciste $3^{1 + \log_3(x-2)} = 1 + 3^{\log_3(x-2)}$. <strong>NO se puede</strong>: la exponencial NO se distribuye sobre la suma.
+            Lo correcto es $3^{1+u} = 3 \cdot 3^u$. Tampoco aprovechaste que $1 = \log_3 3$ para meter el 1 dentro del log.
+          </p>
+          <p class="text-slate-600 text-sm mt-2"><strong>Causa raíz:</strong> no tienes interiorizadas las 4 leyes ($\log(ab) = \log a + \log b$, $\log(a/b)$, $\log(a^n) = n\log a$, cambio de base). Las aplicas "como suena".</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-white rounded-xl border border-orange-200 p-5">
+      <div class="flex justify-between items-start gap-4">
+        <div>
+          <span class="pill bg-orange-100 text-orange-700">ALTA · 4 ejercicios</span>
+          <h4 class="font-bold text-lg mt-2">3) Dominios (logaritmos, raíces pares y denominadores)</h4>
+          <p class="text-slate-600 text-sm mt-1">
+            En el punto 1, para $\ln(2-x)$ escribiste $x = 2$ (como si fuera denominador). El logaritmo exige
+            <strong>argumento estrictamente positivo</strong>: $2 - x > 0 \Rightarrow x < 2$.
+            En el punto 12, para $\sqrt{x - 4/x}$ no hiciste el análisis de signos y respondiste $\mathbb{R}\setminus\{2\}$.
+          </p>
+          <p class="text-slate-600 text-sm mt-2"><strong>Causa raíz:</strong> tratas todas las restricciones por igual ($\neq 0$). No diferencias las tres reglas: denominador $\neq 0$, raíz par $\geq 0$, log $> 0$.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-white rounded-xl border border-orange-200 p-5">
+      <div class="flex justify-between items-start gap-4">
+        <div>
+          <span class="pill bg-orange-100 text-orange-700">ALTA · 3 ejercicios</span>
+          <h4 class="font-bold text-lg mt-2">4) Modelos exponenciales y vértice de una parábola</h4>
+          <p class="text-slate-600 text-sm mt-1">
+            Punto 5: el proyectil tiene $h(t)=-3t^2+18t$ y solo escribiste la fórmula, sin hallar el máximo
+            (vértice en $t = -b/(2a) = 3$, así $h_{max} = 27\,\text{m}$).
+            Punto 8: planteaste bien $P(t)=40\cdot 2^{t/4}$ pero $2^{3/2}$ lo evaluaste mal (ver error #1).
+          </p>
+          <p class="text-slate-600 text-sm mt-2"><strong>Causa raíz:</strong> no estás conectando la <em>traducción</em> del problema con las herramientas que ya conoces (vértice, fórmula exponencial).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-white rounded-xl border border-yellow-200 p-5">
+      <div class="flex justify-between items-start gap-4">
+        <div>
+          <span class="pill bg-yellow-100 text-yellow-700">MEDIA · 2 ejercicios</span>
+          <h4 class="font-bold text-lg mt-2">5) Manipulación algebraica al expandir y simplificar</h4>
+          <p class="text-slate-600 text-sm mt-1">
+            Punto 3 (cociente diferencial): equivocaste el desarrollo de $(x+h)^2 - 5(x+h)$. En el 11 (intersección de gráficas),
+            evaluaste valores a mano en vez de igualar $f(x) = g(x)$ y resolver.
+          </p>
+          <p class="text-slate-600 text-sm mt-2"><strong>Causa raíz:</strong> trabajo lineal sin estructura. Cuando la expresión es larga, te apuras y omites términos.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-white rounded-xl border border-yellow-200 p-5">
+      <div class="flex justify-between items-start gap-4">
+        <div>
+          <span class="pill bg-yellow-100 text-yellow-700">MEDIA · 2 ejercicios</span>
+          <h4 class="font-bold text-lg mt-2">6) Función inversa (despejar y luego intercambiar variables)</h4>
+          <p class="text-slate-600 text-sm mt-1">
+            Punto 9: olvidaste intercambiar $x$ y $y$ al final y arrastraste un error de signo en el despeje.
+            El método es: poner $y=f(x)$, despejar $x$, e intercambiar $x \leftrightarrow y$.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mt-8 bg-indigo-50 border border-indigo-200 rounded-xl p-5">
+    <h3 class="font-bold text-lg text-indigo-900">🎯 Cómo usar este material</h3>
+    <ol class="list-decimal ml-5 mt-2 text-slate-700 space-y-1 text-sm">
+      <li>Lee el enunciado, <strong>intenta el ejercicio en papel SIN mirar la solución</strong>.</li>
+      <li>Cuando tengas tu respuesta (o te trabes), oprime <em>"Ver solución paso a paso"</em>.</li>
+      <li>Si te equivocaste, no pases al siguiente: redo el ejercicio cubriendo la solución hasta que te salga solo.</li>
+      <li>Marca con un ✔ los que ya dominas. Al día siguiente, repítelos. La repetición espaciada es lo que fija el aprendizaje.</li>
+      <li>Antes del próximo parcial, vuelve a hacer los 20 sin mirar. Si los haces todos bien, vas afilada.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- SIMULADORES -->
+<section id="simuladores" class="bg-white border-y border-slate-200">
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <h2 class="text-3xl font-bold text-slate-900">🧪 Simuladores interactivos</h2>
+    <p class="text-slate-600 mt-2">Juega con estos para construir intuición antes de los ejercicios.</p>
+
+    <div class="grid md:grid-cols-2 gap-6 mt-6">
+
+      <!-- SIMULADOR EXPONENTES FRACCIONARIOS -->
+      <div class="card bg-slate-50 p-5 rounded-xl border border-slate-200">
+        <h3 class="font-bold text-lg">Simulador: exponentes fraccionarios</h3>
+        <p class="text-sm text-slate-600 mt-1">Recordatorio: $a^{m/n} = \sqrt[n]{a^m} = (\sqrt[n]{a})^m$</p>
+        <div class="mt-3 grid grid-cols-3 gap-2">
+          <label class="text-sm">Base $a$<input id="expA" type="number" value="8" class="w-full mt-1 px-2 py-1 border rounded"/></label>
+          <label class="text-sm">Numerador $m$<input id="expM" type="number" value="2" class="w-full mt-1 px-2 py-1 border rounded"/></label>
+          <label class="text-sm">Denominador $n$<input id="expN" type="number" value="3" class="w-full mt-1 px-2 py-1 border rounded"/></label>
+        </div>
+        <button onclick="calcExp()" class="mt-3 bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold w-full">Calcular paso a paso</button>
+        <div id="expOut" class="mt-3 text-sm bg-white border rounded-lg p-3 min-h-[80px]"></div>
+      </div>
+
+      <!-- SIMULADOR DOMINIO -->
+      <div class="card bg-slate-50 p-5 rounded-xl border border-slate-200">
+        <h3 class="font-bold text-lg">Checklist de dominio</h3>
+        <p class="text-sm text-slate-600 mt-1">Marca lo que aparece en la función y verás qué restricción aplicar.</p>
+        <div class="mt-3 space-y-2 text-sm">
+          <label class="flex items-center gap-2"><input type="checkbox" id="dDen" /> Hay <strong>denominador</strong> con variable</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="dRoot" /> Hay <strong>raíz par</strong> (√, ⁴√, ...)</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="dLog" /> Hay <strong>logaritmo</strong> (ln, log)</label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="dRootOdd" /> Hay raíz <strong>impar</strong> (³√, ⁵√)</label>
+        </div>
+        <button onclick="checkDom()" class="mt-3 bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold w-full">Ver restricciones</button>
+        <div id="domOut" class="mt-3 text-sm bg-white border rounded-lg p-3 min-h-[80px]"></div>
+      </div>
+
+      <!-- SIMULADOR EXPONENCIAL -->
+      <div class="card bg-slate-50 p-5 rounded-xl border border-slate-200 md:col-span-2">
+        <h3 class="font-bold text-lg">Crecimiento exponencial (modelo de bacterias)</h3>
+        <p class="text-sm text-slate-600 mt-1">$P(t) = P_0 \cdot 2^{t/T}$. Mueve los controles y ve la curva.</p>
+        <div class="mt-3 grid md:grid-cols-3 gap-3">
+          <label class="text-sm">$P_0$ inicial: <span id="lblP0">40</span><input id="P0" type="range" min="1" max="200" value="40" class="w-full"/></label>
+          <label class="text-sm">Periodo de duplicación $T$: <span id="lblT">4</span> h<input id="T" type="range" min="1" max="20" value="4" class="w-full"/></label>
+          <label class="text-sm">Tiempo $t$ (h): <span id="lblTT">6</span><input id="TT" type="range" min="0" max="48" value="6" step="0.5" class="w-full"/></label>
+        </div>
+        <div class="grid md:grid-cols-3 gap-3 mt-3 items-start">
+          <div class="md:col-span-2"><canvas id="expCanvas" width="600" height="240" class="w-full canvas-bg rounded border"></canvas></div>
+          <div id="expReadout" class="bg-white border rounded-lg p-3 text-sm"></div>
+        </div>
+      </div>
+
+      <!-- SIMULADOR ANALISIS DE SIGNOS -->
+      <div class="card bg-slate-50 p-5 rounded-xl border border-slate-200 md:col-span-2">
+        <h3 class="font-bold text-lg">Análisis de signos en una recta</h3>
+        <p class="text-sm text-slate-600 mt-1">
+          Práctica para inecuaciones racionales como $\dfrac{(x-2)(x+2)}{x} \geq 0$.
+          Marca los ceros (numerador) y polos (denominador) y construye la tabla de signos.
+        </p>
+        <div class="grid md:grid-cols-2 gap-3 mt-3 text-sm">
+          <label>Raíces del numerador (separadas por coma):<input id="numRoots" value="-2,2" class="w-full mt-1 px-2 py-1 border rounded"/></label>
+          <label>Raíces del denominador (separadas por coma):<input id="denRoots" value="0" class="w-full mt-1 px-2 py-1 border rounded"/></label>
+        </div>
+        <button onclick="signAnalysis()" class="mt-3 bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold">Generar análisis</button>
+        <div id="signOut" class="mt-3 bg-white border rounded-lg p-3 min-h-[100px] text-sm"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EJERCICIOS -->
+<section id="ejercicios" class="max-w-6xl mx-auto px-6 py-12">
+  <h2 class="text-3xl font-bold text-slate-900">📝 20 ejercicios tipo parcial</h2>
+  <p class="text-slate-600 mt-2">Distribuidos por frecuencia de error. Cada uno tiene su solución desplegable.</p>
+
+  <!-- NAVEGACIÓN -->
+  <div class="mt-4 flex flex-wrap gap-2 sticky top-0 bg-slate-50 py-3 z-10 border-b">
+    <a href="#bloqueA" class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-semibold">A · Exponentes (5)</a>
+    <a href="#bloqueB" class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-sm font-semibold">B · Logaritmos (4)</a>
+    <a href="#bloqueC" class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold">C · Dominios (4)</a>
+    <a href="#bloqueD" class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold">D · Aplicaciones (3)</a>
+    <a href="#bloqueE" class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold">E · Álgebra (2)</a>
+    <a href="#bloqueF" class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm font-semibold">F · Inversas (2)</a>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- BLOQUE A — EXPONENTES Y RADICALES -->
+  <!-- ====================================================== -->
+  <div id="bloqueA" class="mt-10">
+    <div class="flex items-center gap-3">
+      <span class="pill bg-red-100 text-red-700">BLOQUE A</span>
+      <h3 class="text-2xl font-bold">Exponentes fraccionarios, signos y radicales</h3>
+    </div>
+    <p class="text-slate-600 mt-1">⚠️ Trampa frecuente: $-a^n \neq (-a)^n$. Y $a^{m/n}$ es una raíz, no una multiplicación.</p>
+
+    <!-- EJ 1 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-6 p-5">
+      <h4 class="font-bold">Ejercicio 1 · [0.4 pts]</h4>
+      <p class="mt-2">Evalúa sin calculadora: $\;2^{3/2} + (-3)^0 - 3^0$</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">$2^{3/2} = \sqrt{2^3} = \sqrt{8} = 2\sqrt{2}$ (raíz cuadrada de $2^3$).</div>
+          <div class="step">$(-3)^0 = 1$ (cualquier número distinto de cero elevado a 0 es 1, y el menos SÍ está dentro del paréntesis).</div>
+          <div class="step">$-3^0 = -(3^0) = -1$ (el menos NO está dentro del exponente).</div>
+          <div class="step"><strong>Total:</strong> $2\sqrt{2} + 1 - 1 = 2\sqrt{2}$.</div>
+          <div class="warning"><strong>Error que cometiste:</strong> escribiste $-3^0 + 2 = 3$, asumiendo $-3^0 = 1$. Memoriza: el signo es como un "$-1\cdot$" delante; primero se calcula la potencia, luego se aplica el signo.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 2 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 2 · [0.4 pts]</h4>
+      <p class="mt-2">Simplifica usando solo exponentes positivos: $\;\dfrac{(x^{-2}y^3)^{-2}}{(x^4 y^{-1})^{-1}}$</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Distribuye el $-2$ arriba: $(x^{-2}y^3)^{-2} = x^{4} y^{-6}$.</div>
+          <div class="step">Distribuye el $-1$ abajo: $(x^4 y^{-1})^{-1} = x^{-4} y^{1}$.</div>
+          <div class="step">Cociente: $\dfrac{x^{4}y^{-6}}{x^{-4}y^{1}} = x^{4-(-4)}\,y^{-6-1} = x^{8}y^{-7}$.</div>
+          <div class="step">Exponentes positivos: $\dfrac{x^{8}}{y^{7}}$.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 3 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 3 · [0.4 pts]</h4>
+      <p class="mt-2">Simplifica: $\;\sqrt{x^3 \sqrt{x^{-2} y^4}}\;$ (asume $x,y>0$).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Raíz interna: $\sqrt{x^{-2} y^4} = x^{-1} y^{2}$.</div>
+          <div class="step">Sustituye: $\sqrt{x^3 \cdot x^{-1} y^2} = \sqrt{x^{2} y^2}$.</div>
+          <div class="step">$= x \cdot y = xy$.</div>
+          <div class="tip">Truco: convierte todas las raíces a potencias fraccionarias antes de operar. Es mucho más limpio.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 4 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 4 · [0.4 pts]</h4>
+      <p class="mt-2">Calcula: $\;8^{2/3} - 16^{3/4} + 27^{-1/3}$</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">$8^{2/3} = (\sqrt[3]{8})^2 = 2^2 = 4$.</div>
+          <div class="step">$16^{3/4} = (\sqrt[4]{16})^3 = 2^3 = 8$.</div>
+          <div class="step">$27^{-1/3} = \dfrac{1}{27^{1/3}} = \dfrac{1}{3}$.</div>
+          <div class="step"><strong>Total:</strong> $4 - 8 + \dfrac{1}{3} = -\dfrac{11}{3}$.</div>
+          <div class="tip">Patrón clave: $a^{m/n} = (\sqrt[n]{a})^m$. SIEMPRE saca la raíz primero (te dan números pequeños), luego eleva.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 5 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 5 · [0.4 pts]</h4>
+      <p class="mt-2">Simplifica: $\;\left(\dfrac{x^{1/2} y^{-3}}{x^{-1} y^{2}}\right)^{-2}$ con exponentes positivos.</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Simplifica el interior: $\dfrac{x^{1/2}}{x^{-1}} = x^{1/2+1} = x^{3/2}$ y $\dfrac{y^{-3}}{y^{2}} = y^{-5}$.</div>
+          <div class="step">Queda $\bigl(x^{3/2}y^{-5}\bigr)^{-2}$.</div>
+          <div class="step">Distribuye el $-2$: $x^{-3} y^{10}$.</div>
+          <div class="step">Exponentes positivos: $\dfrac{y^{10}}{x^{3}}$.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- BLOQUE B — LOGARITMOS -->
+  <!-- ====================================================== -->
+  <div id="bloqueB" class="mt-12">
+    <div class="flex items-center gap-3">
+      <span class="pill bg-red-100 text-red-700">BLOQUE B</span>
+      <h3 class="text-2xl font-bold">Logaritmos</h3>
+    </div>
+    <p class="text-slate-600 mt-1">⚠️ Recuerda: $\log_b(b)=1$, y la exponencial <em>NO</em> se distribuye sobre la suma. $b^{1+u} = b \cdot b^u$.</p>
+
+    <!-- EJ 6 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-6 p-5">
+      <h4 class="font-bold">Ejercicio 6 · [0.4 pts]</h4>
+      <p class="mt-2">Resuelve: $\;\log_3(x+10) = 1 + \log_3(x-2)$ &nbsp;(este es <em>idéntico</em> a tu punto 7).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Idea: usar $1 = \log_3 3$ para juntar todo en un solo log.</div>
+          <div class="step">$\log_3(x+10) = \log_3 3 + \log_3(x-2) = \log_3\bigl(3(x-2)\bigr)$.</div>
+          <div class="step">Como los logs son iguales y la base es la misma, los argumentos son iguales: $x+10 = 3(x-2)$.</div>
+          <div class="step">$x+10 = 3x - 6 \;\Rightarrow\; 16 = 2x \;\Rightarrow\; x = 8$.</div>
+          <div class="step">Verifica dominio: $x+10 = 18 > 0$ ✓ y $x-2 = 6 > 0$ ✓.</div>
+          <div class="warning"><strong>Por qué fallaste:</strong> hiciste $3^{1+\log_3(x-2)} = 1 + 3^{\log_3(x-2)}$. La exponencial NO es lineal: $b^{a+c} = b^a \cdot b^c$, no $b^a + b^c$.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 7 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 7 · [0.4 pts]</h4>
+      <p class="mt-2">Si $\log_5 a = 4$ y $\log_5 b = 8$, calcula $\;\log_5\!\left(\dfrac{25\,b}{a^2}\right)$.</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Aplica $\log(A/B) = \log A - \log B$ y $\log(AB)=\log A + \log B$:
+            $\log_5(25b) - \log_5(a^2) = \log_5 25 + \log_5 b - 2\log_5 a$.</div>
+          <div class="step">$\log_5 25 = 2$ (porque $5^2 = 25$).</div>
+          <div class="step">Sustituye: $2 + 8 - 2(4) = 2 + 8 - 8 = 2$.</div>
+          <div class="tip">Estrategia: <em>siempre</em> separa el log primero (multiplicaciones → sumas, divisiones → restas, potencias → factores). Recién al final sustituye valores.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 8 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 8 · [0.4 pts]</h4>
+      <p class="mt-2">Resuelve: $\;\log_2(x) + \log_2(x-2) = 3$.</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Junta: $\log_2\bigl(x(x-2)\bigr) = 3$.</div>
+          <div class="step">Convierte a forma exponencial: $x(x-2) = 2^3 = 8$.</div>
+          <div class="step">$x^2 - 2x - 8 = 0 \Rightarrow (x-4)(x+2)=0 \Rightarrow x=4$ o $x=-2$.</div>
+          <div class="step">Verifica dominio: necesito $x>0$ y $x-2>0$, así que $x>2$. Solo sirve $x=4$.</div>
+          <div class="warning"><strong>Punto crítico:</strong> SIEMPRE verifica las soluciones de una ecuación logarítmica contra el dominio. Una solución "algebraica" puede ser ilegal porque produce $\log$ de un negativo.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 9 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 9 · [0.4 pts]</h4>
+      <p class="mt-2">Resuelve: $\;5^{2x-1} = 7$ (deja la respuesta en términos de $\log$).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Aplica $\log$ a ambos lados (cualquier base; uso natural): $\ln(5^{2x-1}) = \ln 7$.</div>
+          <div class="step">Baja el exponente: $(2x-1)\ln 5 = \ln 7$.</div>
+          <div class="step">Despeja: $2x - 1 = \dfrac{\ln 7}{\ln 5}$, de donde $x = \dfrac{1}{2}\!\left(1 + \dfrac{\ln 7}{\ln 5}\right)$.</div>
+          <div class="tip">Equivalente: $x = \dfrac{1+\log_5 7}{2}$. Ambas formas son correctas.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- BLOQUE C — DOMINIOS -->
+  <!-- ====================================================== -->
+  <div id="bloqueC" class="mt-12">
+    <div class="flex items-center gap-3">
+      <span class="pill bg-orange-100 text-orange-700">BLOQUE C</span>
+      <h3 class="text-2xl font-bold">Dominios de funciones</h3>
+    </div>
+    <p class="text-slate-600 mt-1">⚠️ Tres reglas <strong>distintas</strong>:
+      <span class="pill bg-slate-100 text-slate-700">denominador ≠ 0</span>
+      <span class="pill bg-slate-100 text-slate-700">raíz par ≥ 0</span>
+      <span class="pill bg-slate-100 text-slate-700">log > 0</span>
+    </p>
+
+    <!-- EJ 10 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-6 p-5">
+      <h4 class="font-bold">Ejercicio 10 · [0.4 pts]</h4>
+      <p class="mt-2">Halla el dominio de $\;f(x) = \dfrac{\ln(2-x) - \sqrt[4]{x+4}}{x-1}$ (idéntico a tu punto 1).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Restricción 1 (log): $2 - x > 0 \Rightarrow x < 2$.</div>
+          <div class="step">Restricción 2 (raíz cuarta = par): $x + 4 \geq 0 \Rightarrow x \geq -4$.</div>
+          <div class="step">Restricción 3 (denominador): $x - 1 \neq 0 \Rightarrow x \neq 1$.</div>
+          <div class="step">Intersección: $x \in [-4, 2)$ excluyendo $1$ ⇒ $\boxed{[-4, 1) \cup (1, 2)}$.</div>
+          <div class="warning"><strong>Tu error fue:</strong> escribir $x = 2$ como si $\ln$ fuera un denominador. El $\ln$ exige <em>estrictamente</em> mayor que cero, no solo "distinto de cero".</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 11 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 11 · [0.4 pts]</h4>
+      <p class="mt-2">Halla el dominio de $\;f(x) = \sqrt{x - \dfrac{4}{x}}$ (idéntico a tu punto 12).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Como hay raíz cuadrada: $x - \dfrac{4}{x} \geq 0$. También $x \neq 0$.</div>
+          <div class="step">Combina en una sola fracción: $\dfrac{x^2 - 4}{x} \geq 0$, o sea $\dfrac{(x-2)(x+2)}{x} \geq 0$.</div>
+          <div class="step">Ceros del numerador: $x = -2, 2$ (allí la expresión vale $0$, se incluyen). Polo: $x=0$ (se excluye).</div>
+          <div class="step">Análisis de signos en intervalos: $(-\infty,-2), (-2,0), (0,2), (2,\infty)$:</div>
+          <div class="bg-slate-50 border rounded p-3 font-mono text-sm">
+            <table class="w-full text-center">
+              <tr class="border-b"><th>Intervalo</th><th>$(x+2)$</th><th>$x$</th><th>$(x-2)$</th><th>Signo</th></tr>
+              <tr><td>$(-\infty,-2)$</td><td>−</td><td>−</td><td>−</td><td>−</td></tr>
+              <tr><td>$(-2,0)$</td><td>+</td><td>−</td><td>−</td><td>+</td></tr>
+              <tr><td>$(0,2)$</td><td>+</td><td>+</td><td>−</td><td>−</td></tr>
+              <tr><td>$(2,\infty)$</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+            </table>
+          </div>
+          <div class="step">Necesito $\geq 0$ ⇒ los intervalos $+$: $[-2, 0) \cup [2, \infty)$. Cero se excluye por la división.</div>
+          <div class="step"><strong>Dominio:</strong> $[-2, 0) \cup [2, \infty)$.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 12 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 12 · [0.4 pts]</h4>
+      <p class="mt-2">Halla el dominio de $\;g(x) = \dfrac{\sqrt{x+5}}{\ln(x-1)}$.</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Raíz cuadrada arriba: $x+5 \geq 0 \Rightarrow x \geq -5$.</div>
+          <div class="step">Log en el denominador: $x - 1 > 0 \Rightarrow x > 1$.</div>
+          <div class="step">Además el denominador no puede ser $0$: $\ln(x-1) \neq 0 \Rightarrow x - 1 \neq 1 \Rightarrow x \neq 2$.</div>
+          <div class="step">Intersección: $x > 1$ y $x \neq 2$ ⇒ $\boxed{(1, 2) \cup (2, \infty)}$.</div>
+          <div class="tip">Cuidado doble con $\ln$ en el denominador: dos restricciones (argumento $>0$ <em>y</em> log $\neq 0$).</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 13 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 13 · [0.4 pts]</h4>
+      <p class="mt-2">Halla el dominio de $\;h(x) = \sqrt{\dfrac{x-3}{x+1}}$.</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Raíz cuadrada: $\dfrac{x-3}{x+1} \geq 0$ y además $x+1 \neq 0$.</div>
+          <div class="step">Ceros: $x = 3$ (numerador, incluido). Polo: $x = -1$ (excluido).</div>
+          <div class="bg-slate-50 border rounded p-3 font-mono text-sm">
+            <table class="w-full text-center">
+              <tr class="border-b"><th>Intervalo</th><th>$(x-3)$</th><th>$(x+1)$</th><th>Cociente</th></tr>
+              <tr><td>$(-\infty,-1)$</td><td>−</td><td>−</td><td>+</td></tr>
+              <tr><td>$(-1,3)$</td><td>−</td><td>+</td><td>−</td></tr>
+              <tr><td>$(3,\infty)$</td><td>+</td><td>+</td><td>+</td></tr>
+            </table>
+          </div>
+          <div class="step"><strong>Dominio:</strong> $(-\infty, -1) \cup [3, \infty)$.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- BLOQUE D — APLICACIONES (VÉRTICE, EXPONENCIALES, INTERSECCIÓN) -->
+  <!-- ====================================================== -->
+  <div id="bloqueD" class="mt-12">
+    <div class="flex items-center gap-3">
+      <span class="pill bg-orange-100 text-orange-700">BLOQUE D</span>
+      <h3 class="text-2xl font-bold">Aplicaciones: vértice, exponenciales, intersección</h3>
+    </div>
+
+    <!-- EJ 14 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-6 p-5">
+      <h4 class="font-bold">Ejercicio 14 · [0.4 pts]</h4>
+      <p class="mt-2">Un proyectil tiene altura $h(t) = -3t^2 + 18t$ (en metros, $t$ en segundos). Halla la altura máxima alcanzada (idéntico a tu punto 5).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Es una parábola con $a=-3<0$, así que tiene <em>máximo</em> en el vértice.</div>
+          <div class="step">Tiempo del vértice: $t_v = -\dfrac{b}{2a} = -\dfrac{18}{2(-3)} = 3\,$s.</div>
+          <div class="step">Altura máxima: $h(3) = -3(9) + 18(3) = -27 + 54 = 27\,$m.</div>
+          <div class="warning"><strong>En tu hoja solo escribiste la fórmula y no aplicaste el vértice.</strong> Cuando ves "máximo" o "mínimo" en una cuadrática, automáticamente piensa $t_v = -b/(2a)$.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 15 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 15 · [0.4 pts]</h4>
+      <p class="mt-2">Una población de bacterias se duplica cada 4 horas. Inicialmente hay 40. ¿Cuántas hay luego de 6 horas? (idéntico al 8).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Modelo: $P(t) = P_0 \cdot 2^{t/T}$, con $P_0=40$ y $T=4$.</div>
+          <div class="step">$P(6) = 40 \cdot 2^{6/4} = 40 \cdot 2^{3/2}$.</div>
+          <div class="step">$2^{3/2} = 2 \cdot 2^{1/2} = 2\sqrt{2}$.</div>
+          <div class="step">$P(6) = 40 \cdot 2\sqrt{2} = 80\sqrt{2} \approx 113$ bacterias.</div>
+          <div class="warning"><strong>Tu error:</strong> escribiste $2^{3/2}=32$. Confundiste $2^{3/2}$ con un producto. Recuerda: $2^{3/2}$ es "la raíz cuadrada de $2^3$", no $2 \cdot 3/2$.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 16 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 16 · [0.5 pts]</h4>
+      <p class="mt-2">Halla los puntos de intersección de $f(x)=x^2+2x-8$ y $g(x)=x-6$ (igual al 11).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Iguala las funciones: $x^2 + 2x - 8 = x - 6$.</div>
+          <div class="step">Pasa todo a un lado: $x^2 + x - 2 = 0$.</div>
+          <div class="step">Factoriza: $(x+2)(x-1) = 0 \Rightarrow x = -2$ o $x = 1$.</div>
+          <div class="step">Sustituye en $g$: $g(-2) = -8$, $g(1) = -5$.</div>
+          <div class="step"><strong>Puntos:</strong> $(-2, -8)$ y $(1, -5)$.</div>
+          <div class="warning"><strong>Tu error:</strong> evaluaste valores a mano sin igualar. Lección: "intersección" = "igualar y resolver".</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- BLOQUE E — ÁLGEBRA (COCIENTE DIFERENCIAL, EXPANSIÓN) -->
+  <!-- ====================================================== -->
+  <div id="bloqueE" class="mt-12">
+    <div class="flex items-center gap-3">
+      <span class="pill bg-yellow-100 text-yellow-700">BLOQUE E</span>
+      <h3 class="text-2xl font-bold">Manipulación algebraica</h3>
+    </div>
+
+    <!-- EJ 17 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-6 p-5">
+      <h4 class="font-bold">Ejercicio 17 · [0.4 pts]</h4>
+      <p class="mt-2">Sea $f(x) = x^2 - 5x$. Halla $\;\dfrac{f(x+h) - f(x)}{h}$ y simplifica (igual al 3).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">$f(x+h) = (x+h)^2 - 5(x+h) = x^2 + 2xh + h^2 - 5x - 5h$.</div>
+          <div class="step">$f(x+h) - f(x) = \bigl(x^2 + 2xh + h^2 - 5x - 5h\bigr) - (x^2 - 5x) = 2xh + h^2 - 5h$.</div>
+          <div class="step">Factoriza $h$: $= h(2x + h - 5)$.</div>
+          <div class="step">Divide: $\dfrac{h(2x+h-5)}{h} = 2x + h - 5$.</div>
+          <div class="tip">Plantilla mental: 1) expande con cuidado $(x+h)^n$; 2) resta $f(x)$ entero; 3) factoriza $h$ y cancela.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 18 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 18 · [0.4 pts]</h4>
+      <p class="mt-2">Sean $f(x) = \dfrac{5 - 2x}{4x+1}$ y $g(x) = 3x + 1$. Halla $(f \circ g)(x)$ (igual al 2).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">$(f\circ g)(x) = f(g(x)) = f(3x+1)$.</div>
+          <div class="step">Numerador: $5 - 2(3x+1) = 5 - 6x - 2 = 3 - 6x$.</div>
+          <div class="step">Denominador: $4(3x+1)+1 = 12x + 4 + 1 = 12x + 5$.</div>
+          <div class="step">$(f\circ g)(x) = \dfrac{3 - 6x}{12x + 5}$.</div>
+          <div class="tip">Pro tip: reemplaza $g(x)$ por <strong>una sola variable nueva</strong> (digamos $u$) y opera. Ayuda a no perder paréntesis.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- ====================================================== -->
+  <!-- BLOQUE F — INVERSAS -->
+  <!-- ====================================================== -->
+  <div id="bloqueF" class="mt-12">
+    <div class="flex items-center gap-3">
+      <span class="pill bg-yellow-100 text-yellow-700">BLOQUE F</span>
+      <h3 class="text-2xl font-bold">Funciones inversas</h3>
+    </div>
+    <p class="text-slate-600 mt-1">Método: 1) escribe $y=f(x)$, 2) despeja $x$, 3) intercambia $x \leftrightarrow y$.</p>
+
+    <!-- EJ 19 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-6 p-5">
+      <h4 class="font-bold">Ejercicio 19 · [0.4 pts]</h4>
+      <p class="mt-2">Halla la función inversa de $\;f(x) = 3 - \dfrac{\sqrt[3]{x+8}}{2}$ (similar al 9).</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">Escribe $y = 3 - \dfrac{\sqrt[3]{x+8}}{2}$.</div>
+          <div class="step">Despeja la raíz: $\dfrac{\sqrt[3]{x+8}}{2} = 3 - y \;\Rightarrow\; \sqrt[3]{x+8} = 2(3-y) = 6 - 2y$.</div>
+          <div class="step">Eleva al cubo: $x + 8 = (6 - 2y)^3$.</div>
+          <div class="step">Despeja $x$: $x = (6 - 2y)^3 - 8$.</div>
+          <div class="step">Intercambia $x \leftrightarrow y$: $\boxed{f^{-1}(x) = (6 - 2x)^3 - 8}$.</div>
+          <div class="warning"><strong>Tu error en el examen:</strong> no terminaste el despeje con el signo correcto y nunca intercambiaste variables. Es <em>un solo</em> intercambio al final, no en medio.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- EJ 20 -->
+    <div class="card bg-white rounded-xl border border-slate-200 mt-4 p-5">
+      <h4 class="font-bold">Ejercicio 20 · [0.4 pts]</h4>
+      <p class="mt-2">Halla la inversa de $\;f(x) = \dfrac{2x - 5}{x + 1}$ e indica su dominio.</p>
+      <details class="mt-3">
+        <summary class="solution-toggle inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg font-semibold"><span class="toggle-arrow">▶</span> Ver solución</summary>
+        <div class="mt-3 space-y-2">
+          <div class="step">$y = \dfrac{2x-5}{x+1}$. Multiplica cruzado: $y(x+1) = 2x - 5$.</div>
+          <div class="step">$yx + y = 2x - 5 \Rightarrow yx - 2x = -5 - y \Rightarrow x(y - 2) = -5 - y$.</div>
+          <div class="step">$x = \dfrac{-5 - y}{y - 2} = \dfrac{-(y+5)}{y-2} = \dfrac{y+5}{2 - y}$.</div>
+          <div class="step">Intercambia: $\boxed{f^{-1}(x) = \dfrac{x + 5}{2 - x}}$, con dominio $x \neq 2$.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- BONUS -->
+  <div class="mt-12 bg-gradient-to-br from-indigo-50 to-pink-50 border border-indigo-200 rounded-xl p-6">
+    <h3 class="text-xl font-bold">🎁 BONUS: 4 mini-retos rápidos</h3>
+    <p class="text-slate-700 text-sm mt-1">Para que practiques las reglas exactas que más fallaste. Hazlos mentalmente en 30 segundos cada uno.</p>
+    <div class="grid md:grid-cols-2 gap-3 mt-4">
+      <div class="bg-white p-4 rounded-lg border">
+        <p class="font-semibold">B1. $-2^4 = ?$</p>
+        <details><summary class="text-indigo-600 cursor-pointer text-sm mt-2">Respuesta</summary>
+          <p class="text-sm mt-1">$-16$. El signo está fuera del exponente. $(-2)^4 = 16$ sería distinto.</p></details>
+      </div>
+      <div class="bg-white p-4 rounded-lg border">
+        <p class="font-semibold">B2. $\log_2 32 = ?$</p>
+        <details><summary class="text-indigo-600 cursor-pointer text-sm mt-2">Respuesta</summary>
+          <p class="text-sm mt-1">$5$, porque $2^5 = 32$.</p></details>
+      </div>
+      <div class="bg-white p-4 rounded-lg border">
+        <p class="font-semibold">B3. Dominio de $\ln(x^2)$:</p>
+        <details><summary class="text-indigo-600 cursor-pointer text-sm mt-2">Respuesta</summary>
+          <p class="text-sm mt-1">$\mathbb{R}\setminus\{0\}$. $x^2 \geq 0$ siempre, pero $x^2 > 0$ exige $x \neq 0$.</p></details>
+      </div>
+      <div class="bg-white p-4 rounded-lg border">
+        <p class="font-semibold">B4. $9^{-1/2} = ?$</p>
+        <details><summary class="text-indigo-600 cursor-pointer text-sm mt-2">Respuesta</summary>
+          <p class="text-sm mt-1">$\dfrac{1}{9^{1/2}} = \dfrac{1}{3}$.</p></details>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- CIERRE -->
+<section class="bg-slate-900 text-white">
+  <div class="max-w-4xl mx-auto px-6 py-12 text-center">
+    <h2 class="text-3xl font-bold">Una palabra final</h2>
+    <p class="mt-4 text-slate-300">
+      Daria, mira tus hojas otra vez: el <strong>procedimiento</strong> lo tienes. Lo que te está costando son
+      tres o cuatro <em>reglas</em> que se aplican mal y se acumulan. Esa es una noticia buena: arreglar reglas se hace
+      en una semana de práctica enfocada. No es "no entiendo cálculo" — es "tengo que afinar
+      exponentes fraccionarios, logaritmos y dominios". Hazlo, y la nota se mueve.
+    </p>
+    <p class="mt-4 text-slate-400 text-sm">Hecho con cariño desde Umayux Labs · Suerte en el próximo parcial 🚀</p>
+  </div>
+</section>
+
+<script>
+/* ========== Simulador exponentes fraccionarios ========== */
+function calcExp(){
+  const a = parseFloat(document.getElementById('expA').value);
+  const m = parseFloat(document.getElementById('expM').value);
+  const n = parseFloat(document.getElementById('expN').value);
+  const out = document.getElementById('expOut');
+  if (!n) { out.innerHTML = '<span class="text-red-600">n no puede ser 0</span>'; return; }
+  const result = Math.pow(a, m/n);
+  const inner = Math.pow(a, m);
+  let html = '';
+  html += `<p>Paso 1: $a^{m/n} = \\sqrt[${n}]{a^m} = \\sqrt[${n}]{${a}^{${m}}}$</p>`;
+  html += `<p>Paso 2: $${a}^{${m}} = ${inner}$</p>`;
+  html += `<p>Paso 3: $\\sqrt[${n}]{${inner}} \\approx ${result.toFixed(4)}$</p>`;
+  if (a===2 && m===3 && n===2) html += `<p class="text-green-700 font-semibold mt-2">¡Exacto: $2^{3/2}=2\\sqrt{2}\\approx 2{,}828$, NO 32!</p>`;
+  out.innerHTML = html;
+  if (window.MathJax) MathJax.typesetPromise([out]);
+}
+
+/* ========== Checklist dominio ========== */
+function checkDom(){
+  const items = [];
+  if (document.getElementById('dDen').checked) items.push('Denominador con variable → <strong>denominador ≠ 0</strong> (exclusión puntual).');
+  if (document.getElementById('dRoot').checked) items.push('Raíz par → <strong>radicando ≥ 0</strong> (se permite el 0).');
+  if (document.getElementById('dLog').checked) items.push('Logaritmo → <strong>argumento &gt; 0</strong> (estricto, NO se permite 0).');
+  if (document.getElementById('dRootOdd').checked) items.push('Raíz impar → <strong>sin restricción</strong>, está definida para todo real.');
+  const out = document.getElementById('domOut');
+  if (!items.length) { out.innerHTML = '<em>Marca al menos una opción.</em>'; return; }
+  out.innerHTML = '<ul class="list-disc ml-5 space-y-1">' + items.map(i=>`<li>${i}</li>`).join('') + '</ul><p class="mt-2 text-slate-600">Aplica todas y haz la <strong>intersección</strong> de los conjuntos resultantes.</p>';
+}
+
+/* ========== Simulador exponencial ========== */
+const cP0=document.getElementById('P0'), cT=document.getElementById('T'), cTT=document.getElementById('TT');
+const lP0=document.getElementById('lblP0'), lT=document.getElementById('lblT'), lTT=document.getElementById('lblTT');
+const canvas=document.getElementById('expCanvas'); const ctx=canvas.getContext('2d');
+function drawExp(){
+  const P0=+cP0.value, T=+cT.value, t=+cTT.value;
+  lP0.textContent=P0; lT.textContent=T; lTT.textContent=t;
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const tMax=Math.max(t,24);
+  const Pmax=P0*Math.pow(2,tMax/T);
+  ctx.strokeStyle='#94a3b8'; ctx.beginPath(); ctx.moveTo(40,H-30); ctx.lineTo(W-10,H-30); ctx.moveTo(40,10); ctx.lineTo(40,H-30); ctx.stroke();
+  ctx.fillStyle='#475569'; ctx.font='11px sans-serif';
+  ctx.fillText('t (h)', W-30, H-12); ctx.fillText('P(t)', 6, 15);
+  ctx.strokeStyle='#6366f1'; ctx.lineWidth=2; ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const tt=tMax*i/200; const pp=P0*Math.pow(2,tt/T);
+    const x=40+(W-50)*tt/tMax; const y=(H-30)-(H-40)*pp/Pmax;
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // marker
+  const px=40+(W-50)*t/tMax;
+  const pyVal=P0*Math.pow(2,t/T);
+  const py=(H-30)-(H-40)*pyVal/Pmax;
+  ctx.fillStyle='#ec4899'; ctx.beginPath(); ctx.arc(px,py,5,0,2*Math.PI); ctx.fill();
+  ctx.strokeStyle='#ec4899'; ctx.setLineDash([4,3]);
+  ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(px,H-30); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(40,py); ctx.stroke();
+  ctx.setLineDash([]);
+  document.getElementById('expReadout').innerHTML =
+    `<p>$P(t) = ${P0}\\cdot 2^{t/${T}}$</p>` +
+    `<p>En $t=${t}$: $P(${t}) = ${P0}\\cdot 2^{${(t/T).toFixed(2)}} \\approx ${pyVal.toFixed(2)}$</p>` +
+    (P0===40&&T===4&&t===6 ? `<p class="text-green-700 font-semibold mt-2">Aquí está: $40\\cdot 2^{1.5} = 80\\sqrt{2} \\approx 113{,}14$ (¡no 1280!).</p>` : '');
+  if (window.MathJax) MathJax.typesetPromise([document.getElementById('expReadout')]);
+}
+[cP0,cT,cTT].forEach(e=>e.addEventListener('input', drawExp));
+drawExp();
+
+/* ========== Análisis de signos ========== */
+function signAnalysis(){
+  const num = document.getElementById('numRoots').value.split(',').map(s=>parseFloat(s.trim())).filter(x=>!isNaN(x));
+  const den = document.getElementById('denRoots').value.split(',').map(s=>parseFloat(s.trim())).filter(x=>!isNaN(x));
+  const all = [...new Set([...num,...den])].sort((a,b)=>a-b);
+  if(!all.length){ document.getElementById('signOut').innerHTML='<em>Ingresa al menos una raíz.</em>'; return; }
+  // crear intervalos
+  const pts = [-Infinity, ...all, Infinity];
+  let rows = '<table class="w-full text-center border"><thead><tr class="bg-slate-100">';
+  rows += '<th class="border p-1">Intervalo</th>';
+  num.forEach(r => rows += `<th class="border p-1">(x − ${r})</th>`);
+  den.forEach(r => rows += `<th class="border p-1">(x − ${r}) den</th>`);
+  rows += '<th class="border p-1">Signo</th></tr></thead><tbody>';
+  for(let i=0;i<pts.length-1;i++){
+    const a=pts[i], b=pts[i+1];
+    const test = isFinite(a) && isFinite(b) ? (a+b)/2 : (isFinite(a)? a+1 : b-1);
+    let sign=1;
+    let cells='';
+    num.forEach(r => { const v=test-r; const s=v>0?'+':'−'; cells+=`<td class="border p-1">${s}</td>`; sign*=v>0?1:-1; });
+    den.forEach(r => { const v=test-r; const s=v>0?'+':'−'; cells+=`<td class="border p-1">${s}</td>`; sign*=v>0?1:-1; });
+    const intervalo = `(${isFinite(a)?a:'−∞'}, ${isFinite(b)?b:'∞'})`;
+    rows += `<tr><td class="border p-1 font-mono">${intervalo}</td>${cells}<td class="border p-1 font-bold ${sign>0?'text-green-700':'text-red-700'}">${sign>0?'+':'−'}</td></tr>`;
+  }
+  rows += '</tbody></table>';
+  rows += '<p class="mt-3 text-slate-600">Para inecuación ≥ 0 toma los <span class="text-green-700 font-semibold">+</span> (incluye raíces del numerador, excluye las del denominador). Para ≤ 0, toma los <span class="text-red-700 font-semibold">−</span>.</p>';
+  document.getElementById('signOut').innerHTML = rows;
+}
+signAnalysis();
+</script>
+
+</body>
+</html>
